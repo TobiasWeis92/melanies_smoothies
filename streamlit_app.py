@@ -32,7 +32,7 @@ if ingredient_list and submit_button:
     ingredients_string = " ".join(ingredient_list)
 
     for fruit in ingredient_list:
-        search_on = pd_df.loc[pd_df["FRUIT_NAME"] == fruit, ["SEARCH_ON"]].iloc[0]
+        search_on = pd_df.loc[pd_df["FRUIT_NAME"] == fruit, ["SEARCH_ON"]].iloc[0, 0]
         st.write(f"Search {fruit} by the term {search_on}.")
         smoothiefroot_response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{search_on}")
         st.subheader(f"{fruit} Nutrition Information")
