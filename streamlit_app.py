@@ -32,6 +32,7 @@ if ingredient_list and submit_button:
 
     for fruit in ingredient_list:
         smoothiefroot_response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{fruit}")
+        st.subheader(f"{fruit} Nutrition Information")
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
     
     my_insert_stmt = f"""
