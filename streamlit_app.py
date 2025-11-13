@@ -6,9 +6,6 @@ from snowflake.snowpark.functions import col
 cnx = st.connection("snowflake")
 session = cnx.session()
 
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
-
 # Write directly to the app
 st.title(f":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
 st.write(
@@ -33,6 +30,10 @@ submit_button = st.button("Submit Order")
 if ingredient_list and submit_button:
     ingredients_string = " ".join(ingredient_list)
 
+    for fruit in ingredient_list:
+        smoothiefroot_response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{fruit}")
+        sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+    
     my_insert_stmt = f"""
                         INSERT INTO SMOOTHIES.PUBLIC.ORDERS(INGREDIENTS, NAME_ON_ORDER)
                         VALUES('{ingredients_string}', '{name_on_order}')
